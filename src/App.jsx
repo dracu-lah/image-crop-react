@@ -1,9 +1,9 @@
-import ProfileUploadModal from "./components/ImageCrop";
+import ImageCrop from "./components/ImageCrop/ImageCrop";
 
 const App = () => {
   return (
     <div>
-      <ProfileUploadModal />
+      <ImageCrop />
     </div>
   );
 };
