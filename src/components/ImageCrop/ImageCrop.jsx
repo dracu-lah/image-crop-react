@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageUploader from "./ImageUploader";
 import ImageCropper from "./ImageCropper";
-import ImageControls from "./ImageControls";
+import ImageCancelButton from "./ImageControls";
 import { base64ToImg } from "./base64ToImg";
 
 const ImageCrop = () => {
   const [image, setImage] = useState(null);
-  const [croppedImage, setCroppedImage] = useState(null);
+  const [croppedImageDataURL, setCroppedImageDataURL] = useState(null);
 
-  const onCropComplete = (croppedArea, croppedAreaPixels) => {
+  const onCropComplete = (_, croppedAreaPixels) => {
     cropImage(croppedAreaPixels);
   };
 
   const clearImage = () => {
     setImage(null);
-    setCroppedImage(null);
+    setCroppedImageDataURL(null);
   };
 
   const cropImage = async (croppedAreaPixels) => {
@@ -42,25 +42,23 @@ const ImageCrop = () => {
         croppedAreaPixels.height,
       );
 
-      const croppedImageDataURL = canvas.toDataURL("image/jpeg");
-      setCroppedImage(croppedImageDataURL);
+      setCroppedImageDataURL(canvas.toDataURL("image/jpeg"));
     }
   };
 
-  const handleProfileUpload = () => {
-    const data = base64ToImg({ croppedImage, imageName: "Image" });
+  useEffect(() => {
+    const data = base64ToImg({
+      croppedImageDataURL,
+      imageName: "Image",
+    });
     console.log("data", data);
-  };
-
+  }, [croppedImageDataURL]);
   return (
     <div style={{ position: "relative" }}>
       {!image && <ImageUploader onImageSelected={setImage} />}
       {image && (
         <div>
-          <ImageControls
-            onClearImage={clearImage}
-            onUpdate={handleProfileUpload}
-          />
+          <ImageCancelButton onClearImage={clearImage} />
           <ImageCropper image={image} onCropComplete={onCropComplete} />
         </div>
       )}

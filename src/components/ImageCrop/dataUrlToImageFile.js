@@ -1,8 +1,8 @@
-// Function to convert base64 image to FormData
-export const base64ToImg = ({ croppedImage, imageName }) => {
-  if (croppedImage) {
+// Function to convert Data Url to Image File
+export const dataUrlToImageFile = ({ croppedImageDataURL, imageName }) => {
+  if (croppedImageDataURL) {
     // Convert base64 to Blob
-    const byteCharacters = atob(croppedImage.split(",")[1]);
+    const byteCharacters = atob(croppedImageDataURL.split(",")[1]);
     const byteNumbers = new Array(byteCharacters.length);
 
     for (let i = 0; i < byteCharacters.length; i++) {
