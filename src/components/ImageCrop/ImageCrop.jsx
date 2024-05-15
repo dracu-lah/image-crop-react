@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ImageUploader from "./ImageUploader";
 import ImageCropper from "./ImageCropper";
 import ImageCancelButton from "./ImageControls";
-import { base64ToImg } from "./base64ToImg";
+import { dataUrlToImageFile } from "./dataUrlToImageFile";
 
 const ImageCrop = () => {
   const [image, setImage] = useState(null);
@@ -47,7 +47,7 @@ const ImageCrop = () => {
   };
 
   useEffect(() => {
-    const data = base64ToImg({
+    const data = dataUrlToImageFile({
       croppedImageDataURL,
       imageName: "Image",
     });
