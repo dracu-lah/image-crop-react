@@ -2,7 +2,14 @@ import ImageCrop from "./components/ImageCrop/ImageCrop";
 
 const App = () => {
   return (
-    <div>
+    <div
+      style={{
+        minHeight: "90vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <ImageCrop />
     </div>
   );

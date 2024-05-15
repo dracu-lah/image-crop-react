@@ -6,6 +6,7 @@ const ImageControls = ({ onClearImage }) => {
       <button
         onClick={onClearImage}
         style={{
+          borderRadius: "100%",
           position: "absolute",
           cursor: "pointer",
           zIndex: 20,
@@ -14,9 +15,12 @@ const ImageControls = ({ onClearImage }) => {
           height: "32px",
           color: "white",
           backgroundColor: "#C40C0C",
+          left: "-10px",
+          top: "-10px",
+          fontWeight: "bold",
         }}
       >
-        x
+        X
       </button>
       <UploadImageButton onClearImage={onClearImage} />
     </div>
