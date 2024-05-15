@@ -1,5 +1,3 @@
-import React from "react";
-
 const ImageUploader = ({ onImageSelected }) => {
 
   const handleFileChange = (e) => {
@@ -13,7 +11,7 @@ const ImageUploader = ({ onImageSelected }) => {
     }
   };
 
-  return <input type="file" onChange={handleFileChange} />;
+  return <input type="file" accept="image/*" onChange={handleFileChange} />;
 };
 
 export default ImageUploader;

@@ -1,39 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UploadImageAPI } from "./api";
 import { ErrorIcon, LoaderIcon, SuccessIcon, UploadIcon } from "./icons";
+import { dataUrlToImageFile } from "./dataUrlToImageFile";
+import { useCroppedImage } from "./useCroppedImage";
 
-const UploadImageButton = ({ file, url }) => {
-  const [error, setError] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const [disabled, setDisabled] = useState(false)
-  const handleUpload = async (file, url) => {
+const UploadImageButton = () => {
+  const { croppedImageDataURL } = useCroppedImage();
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+  const [file, setFile] = useState(null);
+
+  const handleUpload = async () => {
     try {
       setLoading(true);
-      setDisabled(true)
-      setError(false); // Reset error state before upload
-      setSuccess(false); // Reset success state before upload
-      const response = await UploadImageAPI({ file, url });
-      setSuccess(true)
+      setError(false);
+      setSuccess(false);
+      await UploadImageAPI(file);
+      setSuccess(true);
     } catch (error) {
       console.error('Upload failed:', error.message);
-      setError(true)
-      setDisabled(false)
+      setError(true);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
-  const backgroundColor = () => {
-    if (error) {
-      return "#C40C0C"
+  };
+
+  useEffect(() => {
+    if (croppedImageDataURL) {
+      const data = dataUrlToImageFile({
+        croppedImageDataURL,
+        imageName: "Image",
+      });
+      setFile(data);
+      setDisabled(false);
+    } else {
+      setFile(null);
+      setDisabled(true);
     }
-    else if (success) {
-      return "#40A578"
-    }
-    else {
-      return "#31363F"
-    }
-  }
+  }, [croppedImageDataURL]);
+  if (croppedImageDataURL === null) return;
   return (
     <button
       style={{
@@ -46,18 +53,29 @@ const UploadImageButton = ({ file, url }) => {
         height: "42px",
         color: "white",
         cursor: disabled ? "not-allowed" : "pointer",
-        backgroundColor: backgroundColor(),
+        backgroundColor: backgroundColor(error, success),
         borderRadius: "12px"
       }}
-
-      onClick={() => handleUpload(file, url)}>
+      disabled={disabled || loading}
+      onClick={handleUpload}
+      title="Upload Image"
+    >
       {!error && !loading && !success && <UploadIcon />}
       {success && <SuccessIcon />}
       {loading && <LoaderIcon />}
       {error && <ErrorIcon />}
     </button>
-  )
-}
+  );
+};
 
-export default UploadImageButton
+export default UploadImageButton;
 
+const backgroundColor = (error, success) => {
+  if (error) {
+    return "#C40C0C";
+  } else if (success) {
+    return "#40A578";
+  } else {
+    return "#31363F";
+  }
+};

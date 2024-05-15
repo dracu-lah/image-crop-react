@@ -1,11 +1,12 @@
-export const UploadImageAPI = ({ url, file }) => {
+const ImageUploadURL = "http://localhost:5000/upload"
+export const UploadImageAPI = (file) => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
 
     formData.append('file', file);
 
-    xhr.open('POST', url, true);
+    xhr.open('POST', ImageUploadURL, true);
 
     xhr.onload = function() {
       if (xhr.status === 200) {

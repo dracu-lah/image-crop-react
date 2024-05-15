@@ -1,68 +1,34 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ImageUploader from "./ImageUploader";
 import ImageCropper from "./ImageCropper";
 import ImageControls from "./ImageControls";
-import { dataUrlToImageFile } from "./dataUrlToImageFile";
+import CroppedImageContext from "./useCroppedImage";
+import { cropImage } from "./cropImage";
 
-const ImageCrop = ({ url }) => {
-  const [image, setImage] = useState(null);
+const ImageCrop = () => {
+  const [image, setImage] = useState(null)
   const [croppedImageDataURL, setCroppedImageDataURL] = useState(null);
-  const [croppedImage, setCroppedImage] = useState(null)
   const onCropComplete = (_, croppedAreaPixels) => {
-    cropImage(croppedAreaPixels);
-  };
-
-  const clearImage = () => {
-    setImage(null);
-    setCroppedImageDataURL(null);
-  };
-
-  const cropImage = async (croppedAreaPixels) => {
-    if (image && croppedAreaPixels) {
-      const canvas = document.createElement("canvas");
-      const imageElement = document.createElement("img");
-      imageElement.src = image;
-
-      const scaleX = imageElement.naturalWidth / imageElement.width;
-      const scaleY = imageElement.naturalHeight / imageElement.height;
-
-      canvas.width = croppedAreaPixels.width;
-      canvas.height = croppedAreaPixels.height;
-
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(
-        imageElement,
-        croppedAreaPixels.x * scaleX,
-        croppedAreaPixels.y * scaleY,
-        croppedAreaPixels.width * scaleX,
-        croppedAreaPixels.height * scaleY,
-        0,
-        0,
-        croppedAreaPixels.width,
-        croppedAreaPixels.height,
-      );
-
-      setCroppedImageDataURL(canvas.toDataURL("image/jpeg"));
-    }
+    const croppedImage = cropImage(image, croppedAreaPixels);
+    setCroppedImageDataURL(croppedImage)
   };
 
   useEffect(() => {
-    const data = dataUrlToImageFile({
-      croppedImageDataURL,
-      imageName: "Image",
-    });
-    setCroppedImage(data)
-  }, [croppedImageDataURL]);
+    if (image === null) setCroppedImageDataURL(null);
+  }, [image])
+  // Wrap the component with the context provider
   return (
-    <div style={{ position: "relative" }}>
-      {!image && <ImageUploader onImageSelected={setImage} />}
-      {image && (
-        <div>
-          <ImageControls onClearImage={clearImage} image={image && croppedImage} url={url} />
-          <ImageCropper image={image} onCropComplete={onCropComplete} />
-        </div>
-      )}
-    </div>
+    <CroppedImageContext.Provider value={{ croppedImageDataURL }}>
+      <div style={{ position: "relative" }}>
+        {!image && <ImageUploader onImageSelected={setImage} />}
+        {image && (
+          <div>
+            <ImageControls onClearImage={() => setImage(null)} />
+            <ImageCropper image={image} onCropComplete={onCropComplete} />
+          </div>
+        )}
+      </div>
+    </CroppedImageContext.Provider>
   );
 };
 

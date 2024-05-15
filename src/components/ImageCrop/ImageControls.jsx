@@ -1,6 +1,6 @@
 import UploadImageButton from "./UploadImageButton";
 
-const ImageControls = ({ image, onClearImage, url }) => {
+const ImageControls = ({ onClearImage }) => {
   return (
     <div>
       <button
@@ -18,7 +18,7 @@ const ImageControls = ({ image, onClearImage, url }) => {
       >
         x
       </button>
-      <UploadImageButton file={image} url={url} />
+      <UploadImageButton />
     </div>
   );
 };
