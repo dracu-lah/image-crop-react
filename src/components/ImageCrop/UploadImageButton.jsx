@@ -7,7 +7,6 @@ const UploadImageButton = ({ file, url }) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [disabled, setDisabled] = useState(false)
-  console.log('url', url)
   const handleUpload = async (file, url) => {
     try {
       setLoading(true);

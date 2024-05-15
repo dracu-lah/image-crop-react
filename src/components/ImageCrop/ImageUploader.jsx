@@ -1,6 +1,7 @@
 import React from "react";
 
 const ImageUploader = ({ onImageSelected }) => {
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
