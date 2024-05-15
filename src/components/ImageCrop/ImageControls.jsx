@@ -18,7 +18,7 @@ const ImageControls = ({ onClearImage }) => {
       >
         x
       </button>
-      <UploadImageButton />
+      <UploadImageButton onClearImage={onClearImage} />
     </div>
   );
 };

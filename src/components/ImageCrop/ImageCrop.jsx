@@ -6,16 +6,16 @@ import CroppedImageContext from "./useCroppedImage";
 import { cropImage } from "./cropImage";
 
 const ImageCrop = () => {
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(null);
   const [croppedImageDataURL, setCroppedImageDataURL] = useState(null);
   const onCropComplete = (_, croppedAreaPixels) => {
     const croppedImage = cropImage(image, croppedAreaPixels);
-    setCroppedImageDataURL(croppedImage)
+    setCroppedImageDataURL(croppedImage);
   };
 
   useEffect(() => {
     if (image === null) setCroppedImageDataURL(null);
-  }, [image])
+  }, [image]);
   // Wrap the component with the context provider
   return (
     <CroppedImageContext.Provider value={{ croppedImageDataURL }}>

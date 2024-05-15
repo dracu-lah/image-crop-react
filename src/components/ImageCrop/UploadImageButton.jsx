@@ -4,7 +4,7 @@ import { ErrorIcon, LoaderIcon, SuccessIcon, UploadIcon } from "./icons";
 import { dataUrlToImageFile } from "./dataUrlToImageFile";
 import { useCroppedImage } from "./useCroppedImage";
 
-const UploadImageButton = () => {
+const UploadImageButton = ({ onClearImage }) => {
   const { croppedImageDataURL } = useCroppedImage();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ const UploadImageButton = () => {
       await UploadImageAPI(file);
       setSuccess(true);
     } catch (error) {
-      console.error('Upload failed:', error.message);
+      console.error("Upload failed:", error.message);
       setError(true);
     } finally {
       setLoading(false);
@@ -40,6 +40,13 @@ const UploadImageButton = () => {
       setDisabled(true);
     }
   }, [croppedImageDataURL]);
+
+  useEffect(() => {
+    if (success) {
+      setTimeout(onClearImage, 2000);
+    }
+  }, [success]);
+
   if (croppedImageDataURL === null) return;
   return (
     <button
@@ -54,7 +61,7 @@ const UploadImageButton = () => {
         color: "white",
         cursor: disabled ? "not-allowed" : "pointer",
         backgroundColor: backgroundColor(error, success),
-        borderRadius: "12px"
+        borderRadius: "12px",
       }}
       disabled={disabled || loading}
       onClick={handleUpload}
