@@ -58,7 +58,7 @@ const ImageCrop = ({ url }) => {
       {!image && <ImageUploader onImageSelected={setImage} />}
       {image && (
         <div>
-          <ImageControls onClearImage={clearImage} image={croppedImage} url={url} />
+          <ImageControls onClearImage={clearImage} image={image && croppedImage} url={url} />
           <ImageCropper image={image} onCropComplete={onCropComplete} />
         </div>
       )}
