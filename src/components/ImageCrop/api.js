@@ -1,13 +1,11 @@
-export const UploadImageAPI = (file, onProgress, onLoad, onError) => {
+export const UploadImageAPI = ({ url, file }) => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
 
     formData.append('file', file);
 
-    xhr.open('POST', 'https://example.com/upload', true);
-
-    xhr.upload.onprogress = onProgress;
+    xhr.open('POST', url, true);
 
     xhr.onload = function() {
       if (xhr.status === 200) {

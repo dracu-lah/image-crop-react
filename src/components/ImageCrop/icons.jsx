@@ -70,7 +70,7 @@ const UploadIcon = () => (
   </svg>
 );
 
-const SuccessIcons = () => (
+const SuccessIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"

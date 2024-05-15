@@ -4,7 +4,7 @@ import ImageCropper from "./ImageCropper";
 import ImageControls from "./ImageControls";
 import { dataUrlToImageFile } from "./dataUrlToImageFile";
 
-const ImageCrop = () => {
+const ImageCrop = ({ url }) => {
   const [image, setImage] = useState(null);
   const [croppedImageDataURL, setCroppedImageDataURL] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null)
@@ -58,7 +58,7 @@ const ImageCrop = () => {
       {!image && <ImageUploader onImageSelected={setImage} />}
       {image && (
         <div>
-          <ImageControls onClearImage={clearImage} image={croppedImage} />
+          <ImageControls onClearImage={clearImage} image={croppedImage} url={url} />
           <ImageCropper image={image} onCropComplete={onCropComplete} />
         </div>
       )}
