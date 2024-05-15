@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ImageUploader from "./ImageUploader";
 import ImageCropper from "./ImageCropper";
-import ImageCancelButton from "./ImageControls";
+import ImageControls from "./ImageControls";
 import { dataUrlToImageFile } from "./dataUrlToImageFile";
 
 const ImageCrop = () => {
   const [image, setImage] = useState(null);
   const [croppedImageDataURL, setCroppedImageDataURL] = useState(null);
-
+  const [croppedImage, setCroppedImage] = useState(null)
   const onCropComplete = (_, croppedAreaPixels) => {
     cropImage(croppedAreaPixels);
   };
@@ -51,14 +51,14 @@ const ImageCrop = () => {
       croppedImageDataURL,
       imageName: "Image",
     });
-    console.log("data", data);
+    setCroppedImage(data)
   }, [croppedImageDataURL]);
   return (
     <div style={{ position: "relative" }}>
       {!image && <ImageUploader onImageSelected={setImage} />}
       {image && (
         <div>
-          <ImageCancelButton onClearImage={clearImage} />
+          <ImageControls onClearImage={clearImage} image={croppedImage} />
           <ImageCropper image={image} onCropComplete={onCropComplete} />
         </div>
       )}

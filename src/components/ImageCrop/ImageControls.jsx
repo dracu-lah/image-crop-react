@@ -1,10 +1,13 @@
-const ImageCancelButton = ({ onClearImage }) => {
+import UploadImageButton from "./UploadImageButton";
+
+const ImageControls = ({ image, onClearImage }) => {
   return (
     <div>
       <button
         onClick={onClearImage}
         style={{
           position: "absolute",
+          cursor: "pointer",
           zIndex: 20,
           border: "none",
           width: "32px",
@@ -15,8 +18,9 @@ const ImageCancelButton = ({ onClearImage }) => {
       >
         x
       </button>
+      <UploadImageButton file={image} />
     </div>
   );
 };
 
-export default ImageCancelButton;
+export default ImageControls;
