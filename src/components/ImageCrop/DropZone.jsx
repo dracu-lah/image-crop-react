@@ -30,7 +30,7 @@ const DropZone = ({ onDrop }) => {
       <p
         style={{
           fontFamily: "monospace",
-          fontSize: "1.2rem",
+          fontSize: "2vw",
           opacity: 0.4,
           fontWeight: "bold",
           userSelect: "none",
