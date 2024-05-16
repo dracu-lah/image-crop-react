@@ -1,4 +1,0 @@
-- notfications 
-  - templates(title, message,variables)
-  - scheduling
-  - send notifications (title, message,date, time, filtering guests by (points, property, search by name, rank))
