@@ -5,7 +5,7 @@ import ImageControls from "./ImageControls";
 import CroppedImageContext from "./useCroppedImage";
 import { cropImage } from "./cropImage";
 
-const ImageCrop = () => {
+const ImageCrop = ({ url = "asdfasdf" }) => {
   const [image, setImage] = useState(null);
   const [croppedImageDataURL, setCroppedImageDataURL] = useState(null);
   const onCropComplete = (_, croppedAreaPixels) => {
@@ -18,7 +18,7 @@ const ImageCrop = () => {
   }, [image]);
   // Wrap the component with the context provider
   return (
-    <CroppedImageContext.Provider value={{ croppedImageDataURL }}>
+    <CroppedImageContext.Provider value={{ croppedImageDataURL, url }}>
       <div style={{ position: "relative" }}>
         {!image && <ImageUploader onImageSelected={setImage} />}
         {image && (
