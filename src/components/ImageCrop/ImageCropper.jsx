@@ -1,15 +1,21 @@
 import { useState } from "react";
 import Cropper from "react-easy-crop";
+import { useCroppedImage } from "./useCroppedImage";
 
 const ImageCropper = ({ image, onCropComplete }) => {
+  const {
+    aspect,
+    cropperWidth: width,
+    cropperHeight: height,
+  } = useCroppedImage();
   const [crop, setCrop] = useState({ x: 0, y: 0 });
 
   return (
     <div
       style={{
         position: "relative",
-        height: "50vw",
-        width: "50vw",
+        height,
+        width,
         borderRadius: "12px",
         boxSizing: "border-box",
         overflow: "hidden",
@@ -18,7 +24,7 @@ const ImageCropper = ({ image, onCropComplete }) => {
       <Cropper
         image={image}
         crop={crop}
-        aspect={4 / 4}
+        aspect={aspect}
         onCropChange={setCrop}
         onCropComplete={onCropComplete}
       />

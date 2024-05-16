@@ -1,7 +1,9 @@
 import { useRef } from "react";
 import DropZone from "./DropZone";
+import { useCroppedImage } from "./useCroppedImage";
 
 const ImageUploader = ({ onImageSelected }) => {
+  const { uploaderWidth: width, uploaderHeight: height } = useCroppedImage();
   const inputRef = useRef(null);
 
   const handleFileChange = (e) => {
@@ -28,8 +30,8 @@ const ImageUploader = ({ onImageSelected }) => {
         justifyContent: "center",
         alignItems: "center",
         cursor: "pointer",
-        width: "50vw",
-        height: "50vw",
+        width,
+        height,
       }}
       onClick={openFileDialog}
     >
