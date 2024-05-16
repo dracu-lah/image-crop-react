@@ -24,7 +24,8 @@ const ImageUploader = ({ onImageSelected }) => {
   return (
     <div
       style={{
-        border: "2px dashed #ccc",
+        overflow: "hidden",
+        background: "#EEEDEB",
         borderRadius: "12px",
         display: "flex",
         justifyContent: "center",
